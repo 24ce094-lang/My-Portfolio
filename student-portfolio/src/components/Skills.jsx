@@ -1,13 +1,5 @@
 // Skills.jsx — Practical 1: receives `skillsList` array as a prop and renders it
 function Skills({ skillsList }) {
-  const categoryColors = {
-    default: '#6c63ff',
-    react: '#61dafb',
-    js: '#f7df1e',
-    python: '#3776ab',
-    node: '#339933',
-    css: '#264de4',
-  };
 
   return (
     <section id="skills" style={{ padding: '80px 0' }}>

@@ -1,6 +1,6 @@
 // App.jsx — Theme management: reads/writes localStorage, applies data-theme to <html>
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -19,7 +19,7 @@ function NotFound() {
           <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>
             The page you're looking for doesn't exist.
           </p>
-          <a href="/" className="btn btn-primary">Go Home</a>
+          <Link to="/" className="btn btn-primary">Go Home</Link>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <NavBar theme={theme} onToggleTheme={toggleTheme} />
       <Routes>
         <Route path="/"        element={<Home />} />
@@ -52,7 +52,7 @@ function App() {
         <Route path="*"         element={<NotFound />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 // Header.jsx — Hero section with 3D rotating cube, floating mini-cubes, mouse-tilt
 function Header({ name, theme, heroRef }) {
   const CUBE_FACES = ['⚛️', '🚀', '💻', '🎨', '⚡', '🔗'];
@@ -61,12 +63,12 @@ function Header({ name, theme, heroRef }) {
           </p>
 
           <div className="hero-cta animate-fade-slide delay-3">
-            <a href="/projects" className="btn btn-primary">
+            <Link to="/projects" className="btn btn-primary">
               View Projects &rarr;
-            </a>
-            <a href="/contact" className="btn btn-outline">
+            </Link>
+            <Link to="/contact" className="btn btn-outline">
               Contact Me
-            </a>
+            </Link>
           </div>
         </div>
       </div>

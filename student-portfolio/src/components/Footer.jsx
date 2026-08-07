@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 // Footer.jsx — Practical 1: reusable footer with contact / copyright info
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,9 +13,9 @@ function Footer() {
         </p>
 
         <ul className="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/projects">Projects</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
           <li>
             <a
               href="https://github.com"
