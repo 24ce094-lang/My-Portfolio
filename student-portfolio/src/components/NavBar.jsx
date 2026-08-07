@@ -1,32 +1,56 @@
-// NavBar.jsx — Receives theme + toggleTheme, shows sun/moon toggle button
+// NavBar.jsx — Responsive Navigation with Theme Toggle & Mobile Hamburger Menu
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function NavBar({ theme, onToggleTheme }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  function closeMenu() {
+    setMobileOpen(false);
+  }
+
   return (
     <nav className="navbar" id="main-navbar">
       <div className="container">
-        <NavLink to="/" className="nav-logo">SP.</NavLink>
+        {/* Brand Logo */}
+        <NavLink to="/" className="nav-logo" onClick={closeMenu}>
+          SP.
+        </NavLink>
 
         <div className="nav-right">
-          <ul className="nav-links" role="list">
+          {/* Nav Links — Desktop horizontal / Mobile dropdown */}
+          <ul className={`nav-links ${mobileOpen ? 'mobile-active' : ''}`} role="list">
             <li>
-              <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMenu}
+              >
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="/projects" className={({ isActive }) => (isActive ? 'active' : '')}>
+              <NavLink
+                to="/projects"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMenu}
+              >
                 Projects
               </NavLink>
             </li>
             <li>
-              <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMenu}
+              >
                 Contact
               </NavLink>
             </li>
           </ul>
 
-          {/* Light / Dark toggle */}
+          {/* Light / Dark theme toggle */}
           <button
             id="theme-toggle"
             className="theme-toggle"
@@ -35,6 +59,16 @@ function NavBar({ theme, onToggleTheme }) {
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+
+          {/* Mobile Menu Hamburger Toggle */}
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setMobileOpen(prev => !prev)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? '✕' : '☰'}
           </button>
         </div>
       </div>
