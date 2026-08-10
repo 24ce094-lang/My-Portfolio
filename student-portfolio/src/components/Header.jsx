@@ -66,6 +66,9 @@ function Header({ name, theme, heroRef }) {
             <Link to="/projects" className="btn btn-primary">
               View Projects &rarr;
             </Link>
+            <a href="#resume" className="btn btn-outline">
+              📄 View Resume
+            </a>
             <Link to="/contact" className="btn btn-outline">
               Contact Me
             </Link>

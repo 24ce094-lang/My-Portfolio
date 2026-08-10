@@ -2,6 +2,7 @@
 import { useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import About from '../components/About';
+import Resume from '../components/Resume';
 import Skills from '../components/Skills';
 
 const MY_SKILLS = [
@@ -60,6 +61,7 @@ function Home() {
 
       <div className="container">
         <About />
+        <Resume />
         <Skills skillsList={MY_SKILLS} />
       </div>
     </main>
