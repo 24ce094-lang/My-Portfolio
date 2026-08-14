@@ -18,7 +18,7 @@ function Footer() {
           <li><Link to="/contact">Contact</Link></li>
           <li>
             <a
-              href="https://github.com"
+              href="https://github.com/24ce094-lang"
               target="_blank"
               rel="noreferrer"
             >

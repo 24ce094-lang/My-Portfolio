@@ -66,7 +66,19 @@ function Header({ name, theme, heroRef }) {
             <Link to="/projects" className="btn btn-primary">
               View Projects &rarr;
             </Link>
-            <a href="#resume" className="btn btn-outline">
+            <a
+              href="#resume"
+              className="btn btn-outline"
+              onClick={(e) => {
+                e.preventDefault();
+                const resumeEl = document.getElementById('resume');
+                if (resumeEl) {
+                  resumeEl.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.open('/shaswat_patel_resume.pdf', '_blank');
+                }
+              }}
+            >
               📄 View Resume
             </a>
             <Link to="/contact" className="btn btn-outline">

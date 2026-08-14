@@ -1,5 +1,5 @@
-// Home.jsx — Composes Header, About, Skills; adds mouse-parallax 3D tilt on hero
 import { useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import About from '../components/About';
 import Resume from '../components/Resume';
@@ -22,6 +22,18 @@ const MY_SKILLS = [
 
 function Home() {
   const heroRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/resume' || location.hash.includes('resume')) {
+      const el = document.getElementById('resume');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   // Mouse-parallax 3D tilt — tilts hero text with perspective as cursor moves
   useEffect(() => {

@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 function Resume() {
   const [activeTab, setActiveTab] = useState('all');
-  const [showPdfModal, setShowPdfModal] = useState(false);
   const [copied, setCopied] = useState(false);
 
   function handleCopyContact() {
@@ -39,18 +38,6 @@ function Resume() {
             </a>
 
             <button
-              onClick={() => setShowPdfModal(true)}
-              className="btn btn-outline"
-              title="View PDF preview"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              Preview PDF
-            </button>
-
-            <button
               onClick={handleCopyContact}
               className="btn btn-outline"
               title="Copy Email"
@@ -72,7 +59,7 @@ function Resume() {
                 <span>📍 CHARUSAT, Anand, Gujarat</span>
                 <span>📧 shsaswatpatel111@gmail.com</span>
                 <span>📞 +91 8160043432</span>
-                <a href="https://github.com/shaswat651" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
+                <a href="https://github.com/24ce094-lang" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
                 <a href="https://linkedin.com/in/shaswat-patel-b96987332" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
                 <a href="https://leetcode.com/u/Shsawat_651/" target="_blank" rel="noopener noreferrer">🧩 LeetCode</a>
               </div>
@@ -265,42 +252,6 @@ function Resume() {
           </div>
         </div>
       </div>
-
-      {/* PDF Modal Viewer */}
-      {showPdfModal && (
-        <div className="resume-modal-backdrop" onClick={() => setShowPdfModal(false)}>
-          <div className="resume-modal-content" onClick={e => e.stopPropagation()}>
-            <div className="resume-modal-header">
-              <h3>📄 Resume Document Preview</h3>
-              <div className="modal-actions">
-                <a
-                  href="/shaswat_patel_resume.pdf"
-                  download="Shaswat_Patel_Resume.pdf"
-                  className="btn btn-primary btn-sm"
-                >
-                  Download PDF
-                </a>
-                <button
-                  onClick={() => setShowPdfModal(false)}
-                  className="modal-close-btn"
-                  aria-label="Close modal"
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-            <div className="resume-modal-body">
-              <iframe
-                src="/shaswat_patel_resume.pdf"
-                title="Shaswat Patel Resume PDF"
-                width="100%"
-                height="100%"
-                style={{ border: 'none', borderRadius: '8px' }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
