@@ -1,78 +1,94 @@
-// NavBar.jsx — Floating Pill Navigation (Apple Liquid Glass style)
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// NavBar.jsx — Floating Pill Navigation (Apple Liquid Glass style with robust mobile dropdown)
+import { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 function NavBar({ theme, onToggleTheme }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
 
   function closeMenu() {
     setMobileOpen(false);
   }
 
   return (
-    <nav className="navbar" id="main-navbar" aria-label="Main navigation">
-      <div className="container">
-        {/* Brand Logo */}
-        <NavLink to="/" className="nav-logo" onClick={closeMenu}>
-          SP.
-        </NavLink>
+    <>
+      <nav className="navbar" id="main-navbar" aria-label="Main navigation">
+        <div className="navbar-inner">
+          {/* Brand Logo */}
+          <NavLink to="/" className="nav-logo" onClick={closeMenu}>
+            SP.
+          </NavLink>
 
-        <div className="nav-right">
-          {/* Nav Links — Desktop pill row / Mobile dropdown */}
-          <ul className={`nav-links ${mobileOpen ? 'mobile-active' : ''}`} role="list">
-            <li>
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) => (isActive ? 'active' : '')}
-                onClick={closeMenu}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/projects"
-                className={({ isActive }) => (isActive ? 'active' : '')}
-                onClick={closeMenu}
-              >
-                Projects
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) => (isActive ? 'active' : '')}
-                onClick={closeMenu}
-              >
-                Contact
-              </NavLink>
-            </li>
-          </ul>
+          <div className="nav-right">
+            {/* Nav Links — Desktop pill row / Mobile dropdown */}
+            <ul className={`nav-links ${mobileOpen ? 'mobile-active' : ''}`} role="list">
+              <li>
+                <NavLink
+                  to="/"
+                  end
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                  onClick={closeMenu}
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/projects"
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                  onClick={closeMenu}
+                >
+                  Projects
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                  onClick={closeMenu}
+                >
+                  Contact
+                </NavLink>
+              </li>
+            </ul>
 
-          {/* Light / Dark theme toggle */}
-          <button
-            id="theme-toggle"
-            className="theme-toggle"
-            onClick={onToggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
+            {/* Light / Dark theme toggle */}
+            <button
+              id="theme-toggle"
+              className="theme-toggle"
+              onClick={onToggleTheme}
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
 
-          {/* Mobile Hamburger */}
-          <button
-            className="mobile-menu-btn"
-            onClick={() => setMobileOpen(prev => !prev)}
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? '✕' : '☰'}
-          </button>
+            {/* Mobile Hamburger */}
+            <button
+              className="mobile-menu-btn"
+              onClick={() => setMobileOpen(prev => !prev)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile backdrop overlay to close when tapped outside */}
+      {mobileOpen && (
+        <div
+          className="mobile-nav-backdrop"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
+    </>
   );
 }
 

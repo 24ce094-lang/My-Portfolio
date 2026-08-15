@@ -1,10 +1,10 @@
-// useScrollReveal.js — Attaches IntersectionObserver to all .reveal* elements in a ref
+// useScrollReveal.js — Smooth IntersectionObserver for scroll reveals
 import { useEffect } from 'react';
 
 /**
  * Pass a ref to a container. All children with class
  * `reveal`, `reveal-left`, `reveal-right`, `reveal-scale`, or `reveal-flip`
- * will animate in once they cross the viewport threshold.
+ * will animate in once they cross the viewport threshold and stay visible.
  */
 export default function useScrollReveal(containerRef, deps = []) {
   useEffect(() => {
@@ -19,15 +19,11 @@ export default function useScrollReveal(containerRef, deps = []) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            // Don't unobserve — so it re-animates if user scrolls back
-          } else {
-            // Re-animate on scroll back up — remove visible so it can retrigger
-            // Comment this line out if you only want one-time reveals:
-            entry.target.classList.remove('visible');
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -20px 0px' }
     );
 
     elements.forEach((el) => observer.observe(el));
