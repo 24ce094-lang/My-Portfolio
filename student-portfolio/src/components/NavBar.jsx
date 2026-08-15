@@ -1,4 +1,4 @@
-// NavBar.jsx — Responsive Navigation with Theme Toggle & Mobile Hamburger Menu
+// NavBar.jsx — Floating Pill Navigation (Apple Liquid Glass style)
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ function NavBar({ theme, onToggleTheme }) {
   }
 
   return (
-    <nav className="navbar" id="main-navbar">
+    <nav className="navbar" id="main-navbar" aria-label="Main navigation">
       <div className="container">
         {/* Brand Logo */}
         <NavLink to="/" className="nav-logo" onClick={closeMenu}>
@@ -18,7 +18,7 @@ function NavBar({ theme, onToggleTheme }) {
         </NavLink>
 
         <div className="nav-right">
-          {/* Nav Links — Desktop horizontal / Mobile dropdown */}
+          {/* Nav Links — Desktop pill row / Mobile dropdown */}
           <ul className={`nav-links ${mobileOpen ? 'mobile-active' : ''}`} role="list">
             <li>
               <NavLink
@@ -61,7 +61,7 @@ function NavBar({ theme, onToggleTheme }) {
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
 
-          {/* Mobile Menu Hamburger Toggle */}
+          {/* Mobile Hamburger */}
           <button
             className="mobile-menu-btn"
             onClick={() => setMobileOpen(prev => !prev)}

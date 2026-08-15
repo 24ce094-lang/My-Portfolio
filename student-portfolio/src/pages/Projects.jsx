@@ -1,9 +1,9 @@
-// Projects.jsx — Practical 3: GitHub API fetch with loading, error, and fallback data
-import { useState, useEffect } from 'react';
+// Projects.jsx — Liquid Glass repo cards with shimmer hover, tinted language badges, scroll reveal
+import { useState, useEffect, useRef } from 'react';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const GITHUB_USERNAME = '24ce094-lang';
 
-// Fallback data shown when GitHub API is rate-limited (60 req/hr unauthenticated)
 const FALLBACK_REPOS = [
   {
     id: 1,
@@ -39,16 +39,37 @@ const FALLBACK_REPOS = [
   },
 ];
 
+const LANG_META = {
+  JavaScript: { color: '#f7df1e', bg: 'rgba(247,223,30,0.15)',  icon: '🟨' },
+  TypeScript:  { color: '#3178c6', bg: 'rgba(49,120,198,0.15)', icon: '🔷' },
+  Python:      { color: '#3776ab', bg: 'rgba(55,118,171,0.15)', icon: '🐍' },
+  HTML:        { color: '#e34c26', bg: 'rgba(227,76,38,0.15)',  icon: '🌐' },
+  CSS:         { color: '#264de4', bg: 'rgba(38,77,228,0.15)',  icon: '🎨' },
+  Java:        { color: '#b07219', bg: 'rgba(176,114,25,0.15)', icon: '☕' },
+};
+
+// Repo icon mapping based on keywords in name
+function repoIcon(name) {
+  const n = name.toLowerCase();
+  if (n.includes('placement') || n.includes('student')) return '🎓';
+  if (n.includes('mentor'))   return '🧑‍🏫';
+  if (n.includes('test'))     return '🧪';
+  if (n.includes('web'))      return '🌐';
+  if (n.includes('api'))      return '🔗';
+  return '📦';
+}
+
 function Projects() {
-  const [repos,    setRepos]    = useState([]);
-  const [loading,  setLoading]  = useState(true);
-  const [error,    setError]    = useState(null);
-  const [fromApi,  setFromApi]  = useState(true);  // false = showing fallback
+  const [repos,   setRepos]   = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState(null);
+  const [fromApi, setFromApi] = useState(true);
+  const gridRef = useRef(null);
+  useScrollReveal(gridRef, [repos]);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
-
     const controller = new AbortController();
 
     fetch(
@@ -56,25 +77,14 @@ function Projects() {
       { signal: controller.signal }
     )
       .then(res => {
-        if (res.status === 403) {
-          throw new Error('rate_limited');
-        }
-        if (res.status === 404) {
-          throw new Error('user_not_found');
-        }
-        if (!res.ok) {
-          throw new Error(`GitHub API error: ${res.status}`);
-        }
+        if (res.status === 403) throw new Error('rate_limited');
+        if (res.status === 404) throw new Error('user_not_found');
+        if (!res.ok)            throw new Error(`GitHub API error: ${res.status}`);
         return res.json();
       })
-      .then(data => {
-        setRepos(data);
-        setFromApi(true);
-      })
+      .then(data => { setRepos(data); setFromApi(true); })
       .catch(err => {
         if (err.name === 'AbortError') return;
-
-        // On rate-limit or network failure → show fallback repos
         if (err.message === 'rate_limited' || err.message.includes('fetch')) {
           setRepos(FALLBACK_REPOS);
           setFromApi(false);
@@ -88,21 +98,20 @@ function Projects() {
     return () => controller.abort();
   }, []);
 
-  // ── Loading state ───────────────────────────────────────────────────
+
   if (loading) {
     return (
       <div className="page-wrapper">
         <div className="container">
           <div className="spinner-wrap" id="loading-spinner">
             <div className="spinner" />
-            <p>Fetching GitHub repositories…</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Fetching GitHub repositories…</p>
           </div>
         </div>
       </div>
     );
   }
 
-  // ── Hard error (user not found, etc.) ──────────────────────────────
   if (error && error !== 'rate_limited') {
     return (
       <div className="page-wrapper">
@@ -116,40 +125,31 @@ function Projects() {
     );
   }
 
-  // ── Render repos (live or fallback) ────────────────────────────────
-  const LANG_COLORS = {
-    JavaScript: '#f7df1e',
-    TypeScript: '#3178c6',
-    Python:     '#3776ab',
-    HTML:       '#e34c26',
-    CSS:        '#264de4',
-    Java:       '#b07219',
-  };
-
   return (
     <div className="page-wrapper">
       <div className="container">
-        <div className="section-divider" />
+        <div className="section-divider animate-fade-slide" />
         <h1 className="section-title gradient-text animate-fade-slide">
           GitHub Projects
         </h1>
         <p className="section-subtitle animate-fade-slide delay-1">
           {fromApi
-            ? `Live data from GitHub API · ${repos.length} repositories`
+            ? `Live from GitHub API · ${repos.length} repositories`
             : 'My repositories on GitHub'}
         </p>
 
-        {/* Rate-limit notice (soft warning, repos still shown) */}
+        {/* Rate-limit soft warning */}
         {error === 'rate_limited' && (
           <div
             style={{
-              padding: '14px 20px',
-              borderRadius: '10px',
-              background: 'rgba(234, 179, 8, 0.08)',
-              border: '1px solid rgba(234, 179, 8, 0.25)',
+              padding: '14px 22px',
+              borderRadius: '16px',
+              background: 'rgba(255,159,10,0.09)',
+              border: '1px solid rgba(255,159,10,0.25)',
+              backdropFilter: 'blur(16px)',
               color: '#fde68a',
               fontSize: '0.88rem',
-              marginBottom: '32px',
+              marginBottom: '36px',
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
@@ -157,12 +157,12 @@ function Projects() {
           >
             <span>⚡</span>
             <span>
-              GitHub API rate limit reached (60 req/hr) — showing pinned repos.{' '}
+              GitHub API rate limit reached — showing pinned repos.{' '}
               <a
                 href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: '#fbbf24', fontWeight: 600 }}
+                style={{ color: '#fbbf24', fontWeight: 700 }}
               >
                 View all on GitHub ↗
               </a>
@@ -170,74 +170,72 @@ function Projects() {
           </div>
         )}
 
-        <div className="repo-grid" id="repo-list">
-          {repos.map((repo, index) => (
-            <div
-              key={repo.id}
-              className="glass-card repo-card animate-fade-slide"
-              style={{ animationDelay: `${index * 0.06}s` }}
-            >
-              <div className="repo-icon">📦</div>
-
-              {/* Repo name */}
-              <h3 className="repo-name">{repo.name}</h3>
-
-              {/* Description */}
-              <p className="repo-desc">
-                {repo.description || 'No description provided.'}
-              </p>
-
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-                {repo.language && (
-                  <span
-                    className="badge"
-                    style={{
-                      fontSize: '0.75rem',
-                      color: LANG_COLORS[repo.language] || '#a78bfa',
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: LANG_COLORS[repo.language] || '#a78bfa',
-                        display: 'inline-block',
-                      }}
-                    />
-                    {repo.language}
-                  </span>
-                )}
-                {repo.stargazers_count > 0 && (
-                  <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                    ⭐ {repo.stargazers_count}
-                  </span>
-                )}
-              </div>
-
-              {/* html_url link */}
-              <a
-                href={repo.html_url}
-                target="_blank"
-                rel="noreferrer"
-                className="repo-link"
-                style={{ marginTop: '20px', display: 'inline-flex' }}
+        <div className="repo-grid" id="repo-list" ref={gridRef}>
+          {repos.map((repo, index) => {
+            const lang = LANG_META[repo.language];
+            return (
+              <div
+                key={repo.id}
+                className="glass-card repo-card reveal-scale"
+                style={{ transitionDelay: `${index * 0.07}s` }}
               >
-                View on GitHub →
-              </a>
-            </div>
-          ))}
+                <div className="repo-icon">{repoIcon(repo.name)}</div>
+                <h3 className="repo-name">{repo.name}</h3>
+                <p className="repo-desc">
+                  {repo.description || 'No description provided.'}
+                </p>
+
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '20px' }}>
+                  {repo.language && lang && (
+                    <span
+                      className="badge"
+                      style={{
+                        background: lang.bg,
+                        borderColor: `${lang.color}44`,
+                        color: lang.color,
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: '7px', height: '7px',
+                          borderRadius: '50%',
+                          background: lang.color,
+                          display: 'inline-block',
+                          flexShrink: 0,
+                          boxShadow: `0 0 6px ${lang.color}`,
+                        }}
+                      />
+                      {repo.language}
+                    </span>
+                  )}
+                  {repo.stargazers_count > 0 && (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                      ⭐ {repo.stargazers_count}
+                    </span>
+                  )}
+                </div>
+
+                <a
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="repo-link"
+                >
+                  View on GitHub →
+                </a>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Link to full profile */}
-        <div style={{ textAlign: 'center', marginTop: '48px' }}>
+        <div style={{ textAlign: 'center', marginTop: '56px' }}>
           <a
             href={`https://github.com/${GITHUB_USERNAME}?tab=repositories`}
             target="_blank"
             rel="noreferrer"
             className="btn btn-outline"
           >
-            🐙 &nbsp;See All Repositories on GitHub
+            🐙&nbsp; See All Repositories on GitHub
           </a>
         </div>
       </div>

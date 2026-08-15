@@ -1,11 +1,13 @@
-// App.jsx — Theme management: reads/writes localStorage, applies data-theme to <html>
+// App.jsx — Theme management + Particle Canvas + Scroll Progress
 import { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
+import NavBar         from './components/NavBar';
+import Footer         from './components/Footer';
+import ParticleCanvas from './components/ParticleCanvas';
+import ScrollProgress from './components/ScrollProgress';
+import Home           from './pages/Home';
+import Projects       from './pages/Projects';
+import Contact        from './pages/Contact';
 
 function NotFound() {
   return (
@@ -27,12 +29,10 @@ function NotFound() {
 }
 
 function App() {
-  // Practical 2 Supplementary: useState for dark/light theme
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('portfolio-theme') || 'dark';
-  });
+  const [theme, setTheme] = useState(() =>
+    localStorage.getItem('portfolio-theme') || 'dark'
+  );
 
-  // Apply data-theme attribute to <html> and persist in localStorage
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('portfolio-theme', theme);
@@ -44,10 +44,15 @@ function App() {
 
   return (
     <HashRouter>
+      {/* Fixed background layer — particle canvas */}
+      <ParticleCanvas />
+      {/* Scroll progress indicator */}
+      <ScrollProgress />
+
       <NavBar theme={theme} onToggleTheme={toggleTheme} />
       <Routes>
-        <Route path="/"        element={<Home />} />
-        <Route path="/resume"  element={<Home />} />
+        <Route path="/"         element={<Home />} />
+        <Route path="/resume"   element={<Home />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact"  element={<Contact />} />
         <Route path="*"         element={<NotFound />} />

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-// Footer.jsx — Practical 1: reusable footer with contact / copyright info
+// Footer.jsx — Frosted glass footer with gradient luminous top border
 function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -28,8 +28,7 @@ function Footer() {
         </ul>
 
         <p className="footer-copy">
-          © {currentYear} Shaswat Patel · CHARUSAT · Advanced Web Dev
-          Frameworks
+          © {currentYear} Shaswat Patel · CHARUSAT · Advanced Web Dev Frameworks
         </p>
       </div>
     </footer>
