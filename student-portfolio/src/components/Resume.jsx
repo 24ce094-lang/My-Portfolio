@@ -156,6 +156,30 @@ function Resume() {
 
                   <div className="resume-item-card">
                     <div className="resume-item-header">
+                      <h5 className="resume-project-name">Makers Plane</h5>
+                      <span className="badge">GitHub Project</span>
+                    </div>
+                    <ul className="resume-bullets">
+                      <li>Developed a web project centered around makers and creative/technical project discovery.</li>
+                      <li>Built and maintained the project as part of hands-on full-stack/web development work.</li>
+                      <li>Source: Personal GitHub repository.</li>
+                    </ul>
+                  </div>
+
+                  <div className="resume-item-card">
+                    <div className="resume-item-header">
+                      <h5 className="resume-project-name">Zeto – Food Ordering Platform</h5>
+                      <span className="badge">Under Process</span>
+                    </div>
+                    <ul className="resume-bullets">
+                      <li>Developing a food-ordering web platform inspired by modern services such as Zomato.</li>
+                      <li>Planned to support restaurant discovery, food browsing, ordering, and a user-friendly ordering experience.</li>
+                      <li>Project is currently under process.</li>
+                    </ul>
+                  </div>
+
+                  <div className="resume-item-card">
+                    <div className="resume-item-header">
                       <h5 className="resume-project-name">Smart Study Planner</h5>
                       <span className="badge">Ongoing Project</span>
                     </div>
