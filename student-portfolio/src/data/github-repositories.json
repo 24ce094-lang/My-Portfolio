@@ -1,6 +1,6 @@
 {
   "username": "24ce094-lang",
-  "generated_at": "2026-10-18T05:42:06.869140+00:00",
+  "generated_at": "2026-10-18T05:45:16.393841+00:00",
   "repository_count": 6,
   "repositories": [
     {
@@ -36,10 +36,10 @@
       "description": "Project repository.",
       "url": "https://github.com/24ce094-lang/My-Portfolio",
       "homepage": "https://my-portfolio-kappa-nine-2fkmiy5p2z.vercel.app",
-      "language": "JavaScript",
+      "language": "CSS",
       "stars": 0,
       "created_at": "2026-08-07T05:01:17Z",
-      "updated_at": "2026-10-18T05:27:27Z",
+      "updated_at": "2026-10-18T05:45:09Z",
       "topics": []
     },
     {
