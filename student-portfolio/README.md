@@ -1,16 +1,45 @@
-# React + Vite
+# Student Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite portfolio for Shaswat Patel.
 
-Currently, two official plugins are available:
+## Automatic GitHub-to-resume sync
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The resume project list is generated from the GitHub REST API for `24ce094-lang`. It includes every **public, non-fork repository**, including archived repositories, and excludes forks so upstream projects aren't presented as your own. Private repository metadata is intentionally not published to the public resume.
 
-## React Compiler
+The generated data is stored in `src/data/github-repositories.json`, which powers the online resume. The sync script also regenerates `public/shaswat_patel_resume.pdf`; all repository entries are included in the PDF's first page.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Automation
 
-## Expanding the Oxlint configuration
+GitHub Actions runs the sync:
+- Automatically every six hours.
+- Manually from the repository's **Actions → Sync GitHub projects to resume → Run workflow** page.
+- When the sync script or workflow configuration changes.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The schedule is the mechanism for discovering repositories created in other repositories; GitHub does not automatically send events from every unrelated repository into this workflow. A new public repository will appear after the next successful sync (or after you manually run it). The workflow commits the generated JSON and PDF only when they change. If your portfolio host is connected to this repository for Git-based deployments, those commits will trigger its normal deployment.
+
+### Run the sync locally
+
+Requires Python 3.10+ and network access to the public GitHub API.
+
+```sh
+python3 -m pip install -r requirements-resume.txt
+npm run sync:resume
+npm run build
+npm run lint
+```
+
+The script fails without replacing the generated files if GitHub cannot be reached or returns an unexpected/empty response.
+
+## Development
+
+```sh
+npm install
+npm run dev
+```
+
+## Validation
+
+```sh
+npm run build
+npm run lint
+```

@@ -1,0 +1,85 @@
+{
+  "username": "24ce094-lang",
+  "generated_at": "2026-10-18T05:42:06.869140+00:00",
+  "repository_count": 6,
+  "repositories": [
+    {
+      "id": 1344667316,
+      "name": "AWF_Practical",
+      "full_name": "24ce094-lang/AWF_Practical",
+      "description": "Project repository.",
+      "url": "https://github.com/24ce094-lang/AWF_Practical",
+      "homepage": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "created_at": "2026-08-24T07:29:31Z",
+      "updated_at": "2026-08-24T07:46:41Z",
+      "topics": []
+    },
+    {
+      "id": 1342537235,
+      "name": "odoo",
+      "full_name": "24ce094-lang/odoo",
+      "description": "Project repository.",
+      "url": "https://github.com/24ce094-lang/odoo",
+      "homepage": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "created_at": "2026-08-22T07:06:32Z",
+      "updated_at": "2026-08-22T09:45:18Z",
+      "topics": []
+    },
+    {
+      "id": 1326230832,
+      "name": "My-Portfolio",
+      "full_name": "24ce094-lang/My-Portfolio",
+      "description": "Project repository.",
+      "url": "https://github.com/24ce094-lang/My-Portfolio",
+      "homepage": "https://my-portfolio-kappa-nine-2fkmiy5p2z.vercel.app",
+      "language": "JavaScript",
+      "stars": 0,
+      "created_at": "2026-08-07T05:01:17Z",
+      "updated_at": "2026-10-18T05:27:27Z",
+      "topics": []
+    },
+    {
+      "id": 1274510495,
+      "name": "Student_placement_pro",
+      "full_name": "24ce094-lang/Student_placement_pro",
+      "description": "Project repository.",
+      "url": "https://github.com/24ce094-lang/Student_placement_pro",
+      "homepage": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "created_at": "2026-06-19T15:32:52Z",
+      "updated_at": "2026-07-01T04:02:10Z",
+      "topics": []
+    },
+    {
+      "id": 1194374262,
+      "name": "Mentor-Selector",
+      "full_name": "24ce094-lang/Mentor-Selector",
+      "description": "Project repository.",
+      "url": "https://github.com/24ce094-lang/Mentor-Selector",
+      "homepage": "",
+      "language": "Python",
+      "stars": 0,
+      "created_at": "2026-03-28T09:10:46Z",
+      "updated_at": "2026-03-28T09:28:20Z",
+      "topics": []
+    },
+    {
+      "id": 1138757153,
+      "name": "SGP-TESTING-",
+      "full_name": "24ce094-lang/SGP-TESTING-",
+      "description": "FOR DUMMY",
+      "url": "https://github.com/24ce094-lang/SGP-TESTING-",
+      "homepage": "",
+      "language": "Various technologies",
+      "stars": 0,
+      "created_at": "2026-01-21T04:36:09Z",
+      "updated_at": "2026-01-21T04:36:13Z",
+      "topics": []
+    }
+  ]
+}

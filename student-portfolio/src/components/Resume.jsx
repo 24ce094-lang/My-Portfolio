@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import githubData from '../data/github-repositories.json';
 
 function Resume() {
   const [activeTab, setActiveTab] = useState('all');
@@ -138,58 +139,41 @@ function Resume() {
               <div className="resume-block">
                 <div className="resume-block-title">
                   <span className="icon">🚀</span>
-                  <h4>Key Projects</h4>
+                  <h4>GitHub Projects ({githubData.repositories.length})</h4>
                 </div>
+                <p className="resume-item-desc" style={{ marginBottom: '16px' }}>
+                  Automatically synced from all public, non-fork repositories on GitHub.
+                  {' '}
+                  <a href={`https://github.com/${githubData.username}?tab=repositories`} target="_blank" rel="noopener noreferrer">
+                    View all repositories ↗
+                  </a>
+                </p>
                 <div className="resume-projects-grid">
-                  <div className="resume-item-card">
-                    <div className="resume-item-header">
-                      <h5 className="resume-project-name">Mentor Path – Full-Stack Mentorship Platform</h5>
-                      <span className="badge">MERN Stack</span>
+                  {githubData.repositories.map((repo) => (
+                    <div className="resume-item-card" key={repo.id}>
+                      <div className="resume-item-header">
+                        <h5 className="resume-project-name">
+                          <a href={repo.url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
+                        </h5>
+                        <span className="badge">{repo.language}</span>
+                      </div>
+                      <p className="resume-item-desc">{repo.description}</p>
+                      <div className="resume-item-meta" style={{ marginTop: '10px' }}>
+                        <span className="badge">★ {repo.stars}</span>
+                        {repo.updated_at && (
+                          <span className="badge">Updated {new Date(repo.updated_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'short' })}</span>
+                        )}
+                        {repo.homepage && (
+                          <a href={repo.homepage} target="_blank" rel="noopener noreferrer">Live demo ↗</a>
+                        )}
+                      </div>
                     </div>
-                    <ul className="resume-bullets">
-                      <li>Scraped and processed real-world mentor/faculty data from IIT institutions using Python to build a live database.</li>
-                      <li>Built REST API with Node.js & Express, secured via JWT authentication, bcrypt encryption, and Role-Based Access Control (RBAC).</li>
-                      <li>Integrated Dockerized OpenSearch for high-speed advanced filtering across mentors, courses, and career paths.</li>
-                      <li>Developed personalized learning roadmaps, career discovery, and mentor matching using React 18 + Redux Toolkit.</li>
-                    </ul>
-                  </div>
-
-                  <div className="resume-item-card">
-                    <div className="resume-item-header">
-                      <h5 className="resume-project-name">Makers Plane</h5>
-                      <span className="badge">GitHub Project</span>
-                    </div>
-                    <ul className="resume-bullets">
-                      <li>Developed a web project centered around makers and creative/technical project discovery.</li>
-                      <li>Built and maintained the project as part of hands-on full-stack/web development work.</li>
-                      <li>Source: Personal GitHub repository.</li>
-                    </ul>
-                  </div>
-
-                  <div className="resume-item-card">
-                    <div className="resume-item-header">
-                      <h5 className="resume-project-name">Zeto – Food Ordering Platform</h5>
-                      <span className="badge">Under Process</span>
-                    </div>
-                    <ul className="resume-bullets">
-                      <li>Developing a food-ordering web platform inspired by modern services such as Zomato.</li>
-                      <li>Planned to support restaurant discovery, food browsing, ordering, and a user-friendly ordering experience.</li>
-                      <li>Project is currently under process.</li>
-                    </ul>
-                  </div>
-
-                  <div className="resume-item-card">
-                    <div className="resume-item-header">
-                      <h5 className="resume-project-name">Smart Study Planner</h5>
-                      <span className="badge">Ongoing Project</span>
-                    </div>
-                    <ul className="resume-bullets">
-                      <li>Developing a web-based application to help students manage and plan study schedules efficiently.</li>
-                      <li>Includes task scheduling, progress tracking, and personalized study planning.</li>
-                      <li><strong>Tech Stack:</strong> HTML, CSS, JavaScript, Node.js, MySQL</li>
-                    </ul>
-                  </div>
+                  ))}
                 </div>
+                <p className="resume-item-desc" style={{ marginTop: '12px', fontSize: '0.8rem' }}>
+                  Last synced: {githubData.generated_at ? new Date(githubData.generated_at).toLocaleString() : 'waiting for first sync'}.
+                  {' '}GitHub sync runs every six hours.
+                </p>
               </div>
             )}
 
